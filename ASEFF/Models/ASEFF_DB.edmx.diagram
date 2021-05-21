@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dcd6b257bf194161a971c287f39dce0b" Name="Diagram1">
+        <EntityTypeShape EntityType="ASSEFFModel.Alumno" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Carrera" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Estado" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Actividad" Width="1.5" PointX="9.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Alianza" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Fraternidad" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Modulo" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Operacion" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Rol" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.User" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Evidencia" Width="1.5" PointX="12" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASSEFFModel.Rol_Operacion" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="ASSEFFModel.FK_CARRERA_ALUMNO" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ESTADO_ALUMNO" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_FRATERNIDAD_ALUMNO" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_ALUMNO_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_ACTIVIDAD_EVIDENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_ALIANZA_FRATERNIDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_IDMODULO_OPERACIONES" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_OPERACION_Rol_Operacion" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_ROL_Rol_Operacion" ManuallyRouted="false" />
+        <AssociationConnector Association="ASSEFFModel.FK_ID_ROL_USER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

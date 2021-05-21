@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/c0078485ae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+</head>
+<body>
+    <img src="~/Content/Img/wave-01.png" alt="" class="wave">
+    <div class="container">
+        <div class="img">
+            <img src="~/Content/Img/phone.png" alt="">
+        </div>
+        <div class="login-container">
+            <form class="form-login" action="~/Users/Login">
+                <img class="avatar" src="~/Content/Img/user-icon.png" alt="">
+                <h2>Welcome</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"> </i>
+                    </div>
+                    <div>
+                        <input class="input" type="text" placeholder="Username" name="Username">
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"> </i>
+                    </div>
+                    <div class="div">
+                        <input class="input" type="password" placeholder="Password" name="Password">
+                    </div>
+                </div>
+                <input type="submit" class="btn" value="Login">
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/Scripts/Login.js"></script>
+</body>
+</html>

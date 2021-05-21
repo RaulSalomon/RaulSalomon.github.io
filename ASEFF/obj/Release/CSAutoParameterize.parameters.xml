@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-ASEFF-20201021025736.mdf;Initial Catalog=aspnet-ASEFF-20201021025736;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\igles\\OneDrive\\Escritorio\\ASEFF\\ASEFF\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="ASSEFFEntities-Web.config Connection String" description="ASSEFFEntities Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="metadata=res://*/Models.ASEFF_DB.csdl|res://*/Models.ASEFF_DB.ssdl|res://*/Models.ASEFF_DB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-ARBRI7E\RASI;initial catalog=ASSEFF;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\igles\\OneDrive\\Escritorio\\ASEFF\\ASEFF\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ASSEFFEntities']/@connectionString" />
+  </parameter>
+</parameters>

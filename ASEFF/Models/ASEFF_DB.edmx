@@ -1,0 +1,798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASSEFFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="MATRICULA" />
+          </Key>
+          <Property Name="MATRICULA" Type="int" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APELLIDO_PAT" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDO_MAT" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TELEFONO" Type="char" MaxLength="10" />
+          <Property Name="ESTADO" Type="int" Nullable="false" />
+          <Property Name="CUMPLEANIOS" Type="date" Nullable="false" />
+          <Property Name="FOTO" Type="image" />
+          <Property Name="CORREO" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CARRERA" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="SEMESTRE" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="FRATERNIDAD" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CARRERA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ABREVIATURA" Type="char" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE_ACTIVIDAD" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="FOTO" Type="image" />
+        </EntityType>
+        <EntityType Name="Alianza">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ASSEFF.FRATERNIDADES.Evidencia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Evidencia">
+          <Key>
+            <PropertyRef Name="ID_ACTIVIDAD" />
+            <PropertyRef Name="EVIDENCIA" />
+          </Key>
+          <Property Name="ID_ACTIVIDAD" Type="int" Nullable="false" />
+          <Property Name="EVIDENCIA" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fraternidad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NOMBRE_FRATERNIDAD" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ID_ALIANZA" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="LOGO" Type="image" />
+          <Property Name="PUNTOS" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OPERACION" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MODULO" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROL" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ASSEFF.SECURITY.Rol_Operacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Rol_Operacion">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="int" Nullable="false" />
+          <Property Name="ID_OPERACION" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_ALUMNO" Type="int" Nullable="false" />
+          <Property Name="ID_ROL" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARRERA_ALUMNO">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="CARRERA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESTADO_ALUMNO">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FRATERNIDAD_ALUMNO">
+          <End Role="Fraternidad" Type="Self.Fraternidad" Multiplicity="0..1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fraternidad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="FRATERNIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ACTIVIDAD_EVIDENCIA">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Evidencia" Type="Self.Evidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Evidencia">
+              <PropertyRef Name="ID_ACTIVIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ALIANZA_FRATERNIDAD">
+          <End Role="Alianza" Type="Self.Alianza" Multiplicity="1" />
+          <End Role="Fraternidad" Type="Self.Fraternidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alianza">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fraternidad">
+              <PropertyRef Name="ID_ALIANZA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ALUMNO_USER">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="MATRICULA" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_ALUMNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_OPERACION_Rol_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="ID_OPERACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ROL_Rol_Operacion">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ROL_USER">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDMODULO_OPERACIONES">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="MODULO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_ALUMNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="FACULTAD">
+          <Parameter Name="ACTION" Type="char" Mode="In" />
+          <Parameter Name="MATRICULA" Type="int" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="APP_PAT" Type="varchar" Mode="In" />
+          <Parameter Name="APP_MAT" Type="varchar" Mode="In" />
+          <Parameter Name="TELEFONO" Type="char" Mode="In" />
+          <Parameter Name="ESTADO" Type="int" Mode="In" />
+          <Parameter Name="CUMPLEANIOS" Type="date" Mode="In" />
+          <Parameter Name="FOTO" Type="image" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="CARRERA" Type="varchar" Mode="In" />
+          <Parameter Name="SEMESTRE" Type="char" Mode="In" />
+          <Parameter Name="FRATERNIDAD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ADD_FRATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="FRATERNIDADES">
+          <Parameter Name="ACTION" Type="char" Mode="In" />
+          <Parameter Name="ID_FRATE" Type="varchar" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="ID_ALIANZA" Type="varchar" Mode="In" />
+          <Parameter Name="LOGO" Type="image" Mode="In" />
+          <Parameter Name="PUNTOS" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ASSEFFModelStoreContainer">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" Schema="FACULTAD" store:Type="Tables" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="FACULTAD" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="FACULTAD" store:Type="Tables" />
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" Schema="FRATERNIDADES" store:Type="Tables" />
+          <EntitySet Name="Alianza" EntityType="Self.Alianza" Schema="FRATERNIDADES" store:Type="Tables" />
+          <EntitySet Name="Fraternidad" EntityType="Self.Fraternidad" Schema="FRATERNIDADES" store:Type="Tables" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="SECURITY" store:Type="Tables" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="SECURITY" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="SECURITY" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="SECURITY" store:Type="Tables" />
+          <EntitySet Name="Evidencia" EntityType="Self.Evidencia" store:Type="Tables" store:Schema="FRATERNIDADES">
+            <DefiningQuery>SELECT 
+    [Evidencia].[ID_ACTIVIDAD] AS [ID_ACTIVIDAD], 
+    [Evidencia].[EVIDENCIA] AS [EVIDENCIA]
+    FROM [FRATERNIDADES].[Evidencia] AS [Evidencia]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Rol_Operacion" EntityType="Self.Rol_Operacion" store:Type="Tables" store:Schema="SECURITY">
+            <DefiningQuery>SELECT 
+    [Rol_Operacion].[ID_ROL] AS [ID_ROL], 
+    [Rol_Operacion].[ID_OPERACION] AS [ID_OPERACION]
+    FROM [SECURITY].[Rol_Operacion] AS [Rol_Operacion]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CARRERA_ALUMNO" Association="Self.FK_CARRERA_ALUMNO">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESTADO_ALUMNO" Association="Self.FK_ESTADO_ALUMNO">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FRATERNIDAD_ALUMNO" Association="Self.FK_FRATERNIDAD_ALUMNO">
+            <End Role="Fraternidad" EntitySet="Fraternidad" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ACTIVIDAD_EVIDENCIA" Association="Self.FK_ID_ACTIVIDAD_EVIDENCIA">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Evidencia" EntitySet="Evidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ALIANZA_FRATERNIDAD" Association="Self.FK_ID_ALIANZA_FRATERNIDAD">
+            <End Role="Alianza" EntitySet="Alianza" />
+            <End Role="Fraternidad" EntitySet="Fraternidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ALUMNO_USER" Association="Self.FK_ID_ALUMNO_USER">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_OPERACION_Rol_Operacion" Association="Self.FK_ID_OPERACION_Rol_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ROL_Rol_Operacion" Association="Self.FK_ID_ROL_Rol_Operacion">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ROL_USER" Association="Self.FK_ID_ROL_USER">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDMODULO_OPERACIONES" Association="Self.FK_IDMODULO_OPERACIONES">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASSEFFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="MATRICULA" />
+          </Key>
+          <Property Name="MATRICULA" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDO_PAT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDO_MAT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ESTADO" Type="Int32" Nullable="false" />
+          <Property Name="CUMPLEANIOS" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CORREO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CARRERA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SEMESTRE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FRATERNIDAD" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carrera1" Relationship="Self.FK_CARRERA_ALUMNO" FromRole="Alumno" ToRole="Carrera" />
+          <NavigationProperty Name="Estado1" Relationship="Self.FK_ESTADO_ALUMNO" FromRole="Alumno" ToRole="Estado" />
+          <NavigationProperty Name="Fraternidad1" Relationship="Self.FK_FRATERNIDAD_ALUMNO" FromRole="Alumno" ToRole="Fraternidad" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ID_ALUMNO_USER" FromRole="Alumno" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CARRERA1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ABREVIATURA" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK_CARRERA_ALUMNO" FromRole="Carrera" ToRole="Alumno" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ESTADO1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK_ESTADO_ALUMNO" FromRole="Estado" ToRole="Alumno" />
+        </EntityType>
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE_ACTIVIDAD" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Evidencia" Relationship="Self.FK_ID_ACTIVIDAD_EVIDENCIA" FromRole="Actividad" ToRole="Evidencia" />
+        </EntityType>
+        <EntityType Name="Alianza">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Fraternidad" Relationship="Self.FK_ID_ALIANZA_FRATERNIDAD" FromRole="Alianza" ToRole="Fraternidad" />
+        </EntityType>
+        <EntityType Name="Fraternidad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE_FRATERNIDAD" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_ALIANZA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOGO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PUNTOS" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK_FRATERNIDAD_ALUMNO" FromRole="Fraternidad" ToRole="Alumno" />
+          <NavigationProperty Name="Alianza" Relationship="Self.FK_ID_ALIANZA_FRATERNIDAD" FromRole="Fraternidad" ToRole="Alianza" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_IDMODULO_OPERACIONES" FromRole="Modulo" ToRole="Operacion" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OPERACION1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MODULO" Type="Int32" />
+          <NavigationProperty Name="Modulo1" Relationship="Self.FK_IDMODULO_OPERACIONES" FromRole="Operacion" ToRole="Modulo" />
+          <NavigationProperty Name="Rol_Operacion" Relationship="Self.FK_ID_OPERACION_Rol_Operacion" FromRole="Operacion" ToRole="Rol_Operacion" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROL1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rol_Operacion" Relationship="Self.FK_ID_ROL_Rol_Operacion" FromRole="Rol" ToRole="Rol_Operacion" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ID_ROL_USER" FromRole="Rol" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_ALUMNO" Type="Int32" Nullable="false" />
+          <Property Name="ID_ROL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK_ID_ALUMNO_USER" FromRole="User" ToRole="Alumno" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_ID_ROL_USER" FromRole="User" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Evidencia">
+          <Key>
+            <PropertyRef Name="ID_ACTIVIDAD" />
+            <PropertyRef Name="EVIDENCIA1" />
+          </Key>
+          <Property Name="ID_ACTIVIDAD" Type="Int32" Nullable="false" />
+          <Property Name="EVIDENCIA1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.FK_ID_ACTIVIDAD_EVIDENCIA" FromRole="Evidencia" ToRole="Actividad" />
+        </EntityType>
+        <EntityType Name="Rol_Operacion">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="Int32" Nullable="false" />
+          <Property Name="ID_OPERACION" Type="Int32" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_ID_OPERACION_Rol_Operacion" FromRole="Rol_Operacion" ToRole="Operacion" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_ID_ROL_Rol_Operacion" FromRole="Rol_Operacion" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_CARRERA_ALUMNO">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="CARRERA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESTADO_ALUMNO">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FRATERNIDAD_ALUMNO">
+          <End Role="Fraternidad" Type="Self.Fraternidad" Multiplicity="0..1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fraternidad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="FRATERNIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ALUMNO_USER">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="MATRICULA" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_ALUMNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ACTIVIDAD_EVIDENCIA">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Evidencia" Type="Self.Evidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Evidencia">
+              <PropertyRef Name="ID_ACTIVIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ALIANZA_FRATERNIDAD">
+          <End Role="Alianza" Type="Self.Alianza" Multiplicity="1" />
+          <End Role="Fraternidad" Type="Self.Fraternidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alianza">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fraternidad">
+              <PropertyRef Name="ID_ALIANZA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDMODULO_OPERACIONES">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="MODULO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_OPERACION_Rol_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="ID_OPERACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ROL_Rol_Operacion">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Rol_Operacion" Type="Self.Rol_Operacion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rol_Operacion">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ID_ROL_USER">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASSEFFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" />
+          <EntitySet Name="Alianza" EntityType="Self.Alianza" />
+          <EntitySet Name="Fraternidad" EntityType="Self.Fraternidad" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Evidencia" EntityType="Self.Evidencia" />
+          <EntitySet Name="Rol_Operacion" EntityType="Self.Rol_Operacion" />
+          <AssociationSet Name="FK_CARRERA_ALUMNO" Association="Self.FK_CARRERA_ALUMNO">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESTADO_ALUMNO" Association="Self.FK_ESTADO_ALUMNO">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FRATERNIDAD_ALUMNO" Association="Self.FK_FRATERNIDAD_ALUMNO">
+            <End Role="Fraternidad" EntitySet="Fraternidad" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ALUMNO_USER" Association="Self.FK_ID_ALUMNO_USER">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ACTIVIDAD_EVIDENCIA" Association="Self.FK_ID_ACTIVIDAD_EVIDENCIA">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Evidencia" EntitySet="Evidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ALIANZA_FRATERNIDAD" Association="Self.FK_ID_ALIANZA_FRATERNIDAD">
+            <End Role="Alianza" EntitySet="Alianza" />
+            <End Role="Fraternidad" EntitySet="Fraternidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDMODULO_OPERACIONES" Association="Self.FK_IDMODULO_OPERACIONES">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_OPERACION_Rol_Operacion" Association="Self.FK_ID_OPERACION_Rol_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ROL_Rol_Operacion" Association="Self.FK_ID_ROL_Rol_Operacion">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ID_ROL_USER" Association="Self.FK_ID_ROL_USER">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_ALUMNO">
+            <Parameter Name="ACTION" Mode="In" Type="String" />
+            <Parameter Name="MATRICULA" Mode="In" Type="Int32" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APP_PAT" Mode="In" Type="String" />
+            <Parameter Name="APP_MAT" Mode="In" Type="String" />
+            <Parameter Name="TELEFONO" Mode="In" Type="String" />
+            <Parameter Name="ESTADO" Mode="In" Type="Int32" />
+            <Parameter Name="CUMPLEANIOS" Mode="In" Type="DateTime" />
+            <Parameter Name="FOTO" Mode="In" Type="Binary" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="CARRERA" Mode="In" Type="String" />
+            <Parameter Name="SEMESTRE" Mode="In" Type="String" />
+            <Parameter Name="FRATERNIDAD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ADD_FRATE">
+            <Parameter Name="ACTION" Mode="In" Type="String" />
+            <Parameter Name="ID_FRATE" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="ID_ALIANZA" Mode="In" Type="String" />
+            <Parameter Name="LOGO" Mode="In" Type="Binary" />
+            <Parameter Name="PUNTOS" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASSEFFModelStoreContainer" CdmEntityContainer="ASSEFFEntities">
+          <EntitySetMapping Name="Alumno">
+            <EntityTypeMapping TypeName="ASSEFFModel.Alumno">
+              <MappingFragment StoreEntitySet="Alumno">
+                <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="APELLIDO_PAT" ColumnName="APELLIDO_PAT" />
+                <ScalarProperty Name="APELLIDO_MAT" ColumnName="APELLIDO_MAT" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="CUMPLEANIOS" ColumnName="CUMPLEANIOS" />
+                <ScalarProperty Name="FOTO" ColumnName="FOTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CARRERA" ColumnName="CARRERA" />
+                <ScalarProperty Name="SEMESTRE" ColumnName="SEMESTRE" />
+                <ScalarProperty Name="FRATERNIDAD" ColumnName="FRATERNIDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carrera">
+            <EntityTypeMapping TypeName="ASSEFFModel.Carrera">
+              <MappingFragment StoreEntitySet="Carrera">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CARRERA1" ColumnName="CARRERA" />
+                <ScalarProperty Name="ABREVIATURA" ColumnName="ABREVIATURA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="ASSEFFModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ESTADO1" ColumnName="ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Actividad">
+            <EntityTypeMapping TypeName="ASSEFFModel.Actividad">
+              <MappingFragment StoreEntitySet="Actividad">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE_ACTIVIDAD" ColumnName="NOMBRE_ACTIVIDAD" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="FOTO" ColumnName="FOTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alianza">
+            <EntityTypeMapping TypeName="ASSEFFModel.Alianza">
+              <MappingFragment StoreEntitySet="Alianza">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fraternidad">
+            <EntityTypeMapping TypeName="ASSEFFModel.Fraternidad">
+              <MappingFragment StoreEntitySet="Fraternidad">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE_FRATERNIDAD" ColumnName="NOMBRE_FRATERNIDAD" />
+                <ScalarProperty Name="ID_ALIANZA" ColumnName="ID_ALIANZA" />
+                <ScalarProperty Name="LOGO" ColumnName="LOGO" />
+                <ScalarProperty Name="PUNTOS" ColumnName="PUNTOS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="ASSEFFModel.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacion">
+            <EntityTypeMapping TypeName="ASSEFFModel.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OPERACION1" ColumnName="OPERACION" />
+                <ScalarProperty Name="MODULO" ColumnName="MODULO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="ASSEFFModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ROL1" ColumnName="ROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ASSEFFModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="ID_ALUMNO" ColumnName="ID_ALUMNO" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evidencia">
+            <EntityTypeMapping TypeName="ASSEFFModel.Evidencia">
+              <MappingFragment StoreEntitySet="Evidencia">
+                <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
+                <ScalarProperty Name="EVIDENCIA1" ColumnName="EVIDENCIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol_Operacion">
+            <EntityTypeMapping TypeName="ASSEFFModel.Rol_Operacion">
+              <MappingFragment StoreEntitySet="Rol_Operacion">
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="ID_OPERACION" ColumnName="ID_OPERACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_ALUMNO" FunctionName="ASSEFFModel.Store.ADD_ALUMNO" />
+          <FunctionImportMapping FunctionImportName="ADD_FRATE" FunctionName="ASSEFFModel.Store.ADD_FRATE" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

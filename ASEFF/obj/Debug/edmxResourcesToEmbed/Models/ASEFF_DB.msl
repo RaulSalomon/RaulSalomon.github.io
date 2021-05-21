@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ASSEFFModelStoreContainer" CdmEntityContainer="ASSEFFEntities">
+    <EntitySetMapping Name="Alumno">
+      <EntityTypeMapping TypeName="ASSEFFModel.Alumno">
+        <MappingFragment StoreEntitySet="Alumno">
+          <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="APELLIDO_PAT" ColumnName="APELLIDO_PAT" />
+          <ScalarProperty Name="APELLIDO_MAT" ColumnName="APELLIDO_MAT" />
+          <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="CUMPLEANIOS" ColumnName="CUMPLEANIOS" />
+          <ScalarProperty Name="FOTO" ColumnName="FOTO" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="CARRERA" ColumnName="CARRERA" />
+          <ScalarProperty Name="SEMESTRE" ColumnName="SEMESTRE" />
+          <ScalarProperty Name="FRATERNIDAD" ColumnName="FRATERNIDAD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carrera">
+      <EntityTypeMapping TypeName="ASSEFFModel.Carrera">
+        <MappingFragment StoreEntitySet="Carrera">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CARRERA1" ColumnName="CARRERA" />
+          <ScalarProperty Name="ABREVIATURA" ColumnName="ABREVIATURA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado">
+      <EntityTypeMapping TypeName="ASSEFFModel.Estado">
+        <MappingFragment StoreEntitySet="Estado">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ESTADO1" ColumnName="ESTADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actividad">
+      <EntityTypeMapping TypeName="ASSEFFModel.Actividad">
+        <MappingFragment StoreEntitySet="Actividad">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE_ACTIVIDAD" ColumnName="NOMBRE_ACTIVIDAD" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="FOTO" ColumnName="FOTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alianza">
+      <EntityTypeMapping TypeName="ASSEFFModel.Alianza">
+        <MappingFragment StoreEntitySet="Alianza">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fraternidad">
+      <EntityTypeMapping TypeName="ASSEFFModel.Fraternidad">
+        <MappingFragment StoreEntitySet="Fraternidad">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE_FRATERNIDAD" ColumnName="NOMBRE_FRATERNIDAD" />
+          <ScalarProperty Name="ID_ALIANZA" ColumnName="ID_ALIANZA" />
+          <ScalarProperty Name="LOGO" ColumnName="LOGO" />
+          <ScalarProperty Name="PUNTOS" ColumnName="PUNTOS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modulo">
+      <EntityTypeMapping TypeName="ASSEFFModel.Modulo">
+        <MappingFragment StoreEntitySet="Modulo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Operacion">
+      <EntityTypeMapping TypeName="ASSEFFModel.Operacion">
+        <MappingFragment StoreEntitySet="Operacion">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OPERACION1" ColumnName="OPERACION" />
+          <ScalarProperty Name="MODULO" ColumnName="MODULO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol">
+      <EntityTypeMapping TypeName="ASSEFFModel.Rol">
+        <MappingFragment StoreEntitySet="Rol">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ROL1" ColumnName="ROL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="ASSEFFModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="ID_ALUMNO" ColumnName="ID_ALUMNO" />
+          <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Evidencia">
+      <EntityTypeMapping TypeName="ASSEFFModel.Evidencia">
+        <MappingFragment StoreEntitySet="Evidencia">
+          <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
+          <ScalarProperty Name="EVIDENCIA1" ColumnName="EVIDENCIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol_Operacion">
+      <EntityTypeMapping TypeName="ASSEFFModel.Rol_Operacion">
+        <MappingFragment StoreEntitySet="Rol_Operacion">
+          <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+          <ScalarProperty Name="ID_OPERACION" ColumnName="ID_OPERACION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ADD_ALUMNO" FunctionName="ASSEFFModel.Store.ADD_ALUMNO" />
+    <FunctionImportMapping FunctionImportName="ADD_FRATE" FunctionName="ASSEFFModel.Store.ADD_FRATE" />
+  </EntityContainerMapping>
+</Mapping>
